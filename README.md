@@ -36,7 +36,7 @@ Note that the reflectance should be separately fit for each channel and each dif
 ### Using actual BRDFs
 As an aside, much more sophisticated methods (see Vermote et al., 2009, Roy et al., 2016) which account for different types of scattering and geometric effects, are used to correct well-known satellite surface reflectance products such as MODIS or Landsat. In essence, these models fit parameters for different empirical scattering functions each representing a different physical effect for a given spectral range and surface type, much like what we've done above. The assumption is that bottom of atmosphere reflectance can be represented by three terms for a given solar, viewing and azimuthal angle called the Ross-Li-Maignan BRDF model:
 
-$I(\theta _v,\theta _z, \phi) = k_0 + k_1*F_1(\theta _v,\theta _z, \phi) + k_2*F_2(\theta _v,\theta _z, \phi)$
+$I(\theta _v,\theta _z, \phi) = k_0 + k_1F_1(\theta _v,\theta _z, \phi) + k_2F_2(\theta _v,\theta _z, \phi)$
 
 $F_1$ and $F_2$ are called the volume scattering kernel and the geometric kernel respectively and only depend on the solar and look geometry. The $k$ parameters need to be retrieved by fitting to the data. For Landsat, you can find these values in published papers, for instance see Table 5 of Roy et al., 2016 which lists these parameters for soil and vegetation surface types for visible and IR bands. For your own satellite, once you retrieve the parameters using look geometry (including terrain corrections), you can then use the above BRDF equation to bring the values into nadir view. I have not attempted to implement these models because of time constraints but it is doable.
 
