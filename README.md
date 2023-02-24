@@ -25,7 +25,7 @@ $I_h = I_s \frac{cos \theta _z + c}{cos \gamma + c}$
 
 This factor is calculated by a linearly fitting the BOA reflectance to the cosine of the terrain slope:
 
-$I_t = mcos \gamma + b$
+$I_s = mcos \gamma + b$
 
 and taking the ratio of the intercept to the slope:
 
