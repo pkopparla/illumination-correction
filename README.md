@@ -19,7 +19,14 @@ The implementation uses the semi-empirical "C correction" from Teillet et al., 1
 $I_h = I_s \frac{cos \theta _z}{cos \gamma}$
 
 where
-$I_h$ is the flat surface reflectance, $I_s$ is the bottom of the atmosphere reflectance measured from the sloping surface, $\theta _z$ is the solar zenith angle and $\gamma$ is the terrain-corrected local solar zenith angle. For steep terrains, the denominator blows up, leading to over-corrections. The C-correction rectifies this issue by adding a factor to the ratio:
+$I_h$ is the flat surface reflectance, $I_s$ is the bottom of the atmosphere reflectance measured from the sloping surface, $\theta _z$ is the solar zenith angle and $\gamma$ is the terrain-corrected local solar zenith angle. $\gamma$ is calculated as 
+
+
+$cos \gamma=cos \theta _s cos \theta _z+sin \theta _s sin \theta _z cos(\phi _z− \phi _s)$
+
+where $\theta _s$ is the slop angle, $\phi _s$ is the slope azimuth or aspect, $\phi _z$ is the solar azimuth.
+
+For steep terrains, the denominator blows up, leading to over-corrections. The C-correction rectifies this issue by adding a factor to the ratio:
 
 $I_h = I_s \frac{cos \theta _z + c}{cos \gamma + c}$
 
@@ -47,7 +54,7 @@ The flowchart below summarizes the process.
 ![Flowchart](flowchart.png)
 ### Data generation
 
-The artificial image is 20x20 pixels in extent with 10 channels. It comes with an elevation map, with associated slope and slope azimuth data (aspect). The image is assumed to be small enough that the solar and viewing angles do not vary significantly across pixels. Currently, the image contains four mountain like shapes (see the top right panel of figure below for a visualization). It is created by the `generate_image` function in the `utils.py` script. The reflectance values in this image are not fully random, but a summation of random values with the terrain-corrected solar zenith angle. This is necessary because the image correction algorithm requires some threshold correlation between the terrain and brightness values. It is also for this reason that the solar angles are passed into the image generation function. It is assumed that all pixels in the image represent the same surface type.
+The artificial image is 20x20 pixels in extent with 10 channels. It comes with an elevation map, with associated slope and aspect. The image is assumed to be small enough that the solar and viewing angles do not vary significantly across pixels. Currently, the image contains four mountain like shapes (see the top right panel of figure below for a visualization). It is created by the `generate_image` function in the `utils.py` script. The reflectance values in this image are not fully random, but a summation of random values with the terrain-corrected solar zenith angle. This is necessary because the image correction algorithm requires some threshold correlation between the terrain and brightness values. It is also for this reason that the solar angles are passed into the image generation function. It is assumed that all pixels in the image represent the same surface type.
 
 ### Image correction
 
